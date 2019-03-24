@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "eslint .",
+    "lint": "eslint server.js",
     "start": "node server",
     "watch": "nodemon server"
   },
