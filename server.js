@@ -1,8 +1,8 @@
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+let PORT;
 
 PORT = process.env.PORT || 8080;
 const app = express();
@@ -16,6 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.listen(PORT, function(){
-     console.log("listening on port", PORT)
+app.listen(PORT, () => {
+  console.log('listening on port', PORT);
 });
