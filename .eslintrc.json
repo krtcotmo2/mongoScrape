@@ -13,7 +13,7 @@
         "ecmaVersion": 2018
     },
     "rules": {
-     "linebreak-style": ["error", "windows"],
+     "linebreak-style": ["warn", "windows"],
      "no-console": ["warn", { "allow": ["warn", "error"] }],
      "func-names": ["error", "never"]
     }
