@@ -27,7 +27,7 @@ router.get('/getArticles', (req, res) => {
       res.status(404).json({ message: `no data to return ${err}` });
     });
 });
-router.get("*", (req, res)=> {
-     res.redirect(req.url);
+router.get('*', (req, res) => {
+  res.redirect(req.url);
 });
 module.exports = router;
