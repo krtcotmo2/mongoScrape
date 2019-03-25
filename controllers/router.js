@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 const express = require('express');
 const axious = require('axios');
 const cheerio = require('cheerio');

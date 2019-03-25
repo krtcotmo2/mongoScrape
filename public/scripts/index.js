@@ -1,3 +1,5 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable no-undef */
 const defineSection = (arg) => {
   return arg === undefined ? 'Not Catergorized' : arg;
 };
