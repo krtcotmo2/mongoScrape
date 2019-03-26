@@ -65,14 +65,26 @@ router.get('*', (req, res) => {
 });
 router.post('/updateComment/:id', (req, res) => {
   let artId = req.params.id;
-  db.Note.create(req.body)
-    .then((noteData) => {
-      db.Article.update({ _id: artId }, { note: noteData._id }, (err, data) => {
-        if (err) {
-          return req.status(500).json({ errorMessage: 'Unable to update the article' });
-        }
-        return res.json(data);
-      });
+  db.Article.findOne({ _id: artId })
+    .then((artData) => {
+      if (artData.note === undefined) {
+        db.Note.create(req.body)
+          .then((noteData) => {
+            db.Article.update({ _id: artId }, { note: noteData._id }, (err, data) => {
+              if (err) {
+                return req.status(500).json({ errorMessage: 'Unable to add note to the article' });
+              }
+              return res.json(data);
+            });
+          });
+      } else {
+        db.Note.update({ _id: artData.note }, req.body, (err, data) => {
+          if (err) {
+            return res.status(500).json({ errorMessage: 'Can not update note' });
+          }
+          return res.json(data);
+        });
+      }
     });
 });
 module.exports = router;
