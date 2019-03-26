@@ -55,7 +55,7 @@ $(document).on('click', '#btnSaved', () => {
     .then((response) => {
       $('#articles').html('');
       response.forEach((element) => {
-          const comments = element.note === undefined ? '' : `<div>Comment: ${element.note.comment}<br/>By: ${element.note.author}`;
+          const comments = element.note === undefined ? '' : `<div>Comment: <span class="comment">${element.note.comment}</span><br/>By: <span class="author">${element.note.author}</span>`;
         const card = `<div class="card col-11 col-md-5 col-xl-3  m-2 px-0" data-id=${element._id}>
              <h5 class="card-header text-uppercase">Section: ${defineSection(element.section)}</h5>
              <div class="card-body">
@@ -71,6 +71,9 @@ $(document).on('click', '#btnSaved', () => {
 });
 $(document).on('click', '.btnAddNote', (evt) => {
   const theID = $(evt.target).parent().parent().data('id');
+  $('#authorComment').val($(evt.target).next().find('.comment').text());
+  $('#author').val($(evt.target).next().find('.author').text());
+
   $('#exampleModalCenter').modal();
   $('#curId').val(theID);
   $('#curHead').val($(evt.target).parent().find('h5').text());
@@ -107,6 +110,8 @@ $(document).on('click', '.bntSaveComment', (evt) => {
   })
     .then((response) => {
           console.log(response);
+          $('#exampleModalCenter').modal('hide');
+          $('#btnSaved').trigger('click');
     })
     .catch((err) => {
      console.log(err);
