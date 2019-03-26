@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const NoteSchema = new Schema({
-  title: String,
-  body: String,
+  author: String,
+  comment: String,
 });
 
 const Note = mongoose.model('Note', NoteSchema);
