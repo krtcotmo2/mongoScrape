@@ -106,9 +106,9 @@ $(document).on('click', '.bntSaveComment', (evt) => {
     data: theData,
   })
     .then((response) => {
-
+          console.log(response);
     })
     .catch((err) => {
-
+     console.log(err);
     })
 });
