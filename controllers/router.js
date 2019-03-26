@@ -63,4 +63,16 @@ router.post('/newComment', (req, res) => {
 router.get('*', (req, res) => {
   return res.redirect(req.url);
 });
+router.post('/updateComment/:id', (req, res) => {
+  let artId = req.params.id;
+  db.Note.create(req.body)
+    .then((noteData) => {
+      db.Article.update({ _id: artId }, { note: noteData._id }, (err, data) =>{
+        if (err) {
+          return req.status(500).json({ errorMessage: 'Unable to update the article'});
+        }
+        return res.json(data);
+      });
+    });
+})
 module.exports = router;
