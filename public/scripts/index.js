@@ -55,7 +55,7 @@ $(document).on('click', '#btnSaved', () => {
     .then((response) => {
       $('#articles').html('');
       response.forEach((element) => {
-          const comments = element.note == undefined ? '' : `<div>Comment: ${element.note.comment}<br/>By: ${element.note.author}`;
+          const comments = element.note === undefined ? '' : `<div>Comment: ${element.note.comment}<br/>By: ${element.note.author}`;
         const card = `<div class="card col-11 col-md-5 col-xl-3  m-2 px-0" data-id=${element._id}>
              <h5 class="card-header text-uppercase">Section: ${defineSection(element.section)}</h5>
              <div class="card-body">
@@ -110,5 +110,5 @@ $(document).on('click', '.bntSaveComment', (evt) => {
     })
     .catch((err) => {
      console.log(err);
-    })
+    });
 });
