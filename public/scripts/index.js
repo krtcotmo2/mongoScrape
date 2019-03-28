@@ -5,6 +5,11 @@
 const defineSection = (arg) => {
   return arg === undefined ? 'Not Catergorized' : arg;
 };
+const showMessage = (type, msg) => {
+     $(`.alert.alert-${type}`).text(msg).removeClass('d-none');
+     setTimeout(() => { $('.alert.alert-danger').addClass('d-none'); }, 2000);
+};
+
 const createArticles = (results) => {
   $('#articles').html('');
   results.articles.forEach((element) => {
@@ -30,7 +35,7 @@ $('#btnGet').on('click', () => {
       createArticles(results);
     })
     .catch((err) => {
-      console.log(err);
+     showMessage('error', err.responseJSON.message);
     });
 });
 $(document).on('click', '.btnSave', (evt) => {
@@ -45,12 +50,11 @@ $(document).on('click', '.btnSave', (evt) => {
       url: $(evt.target).parent().find('a').attr('href'),
     },
   })
-    .then((response) => {
-      console.log(response);
+    .then(() => {
+     showMessage('success', 'Article Saved');
     }).catch((msg) => {
       if (msg.status === 409) {
-        $('.alert.alert-danger').text(msg.responseJSON.friendlyMessage).removeClass('d-none');
-        setTimeout(() => { $('.alert.alert-danger').addClass('d-none'); }, 2000);
+          showMessage('alert', msg.responseJSON.friendlyMessage);
       }
     });
 });
@@ -116,12 +120,12 @@ $(document).on('click', '.bntSaveComment', (evt) => {
     url: theUrl,
     data: theData,
   })
-    .then((response) => {
-          console.log(response);
+    .then(() => {
+          showMessage('success', 'Commet Saved');
           $('#exampleModalCenter').modal('hide');
           $('#btnSaved').trigger('click');
     })
     .catch((err) => {
-     console.log(err);
+     showMessage('alert', err.responseJSON.errorMessage);
     });
 });
