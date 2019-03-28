@@ -44,7 +44,7 @@ router.post('/saveArticle', (req, res) => {
       return res.json({ message: `Success ${dbMessage}` });
     })
     .catch((err) => {
-      res.json({ errorMessage: err });
+      res.status(409).json({ friendlyMessage: 'This story has already been saved', errorMessage: err });
     });
 });
 router.post('/newComment', (req, res) => {
