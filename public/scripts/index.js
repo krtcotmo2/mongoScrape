@@ -7,7 +7,7 @@ const defineSection = (arg) => {
 };
 const showMessage = (type, msg) => {
      $(`.alert.alert-${type}`).text(msg).removeClass('d-none');
-     setTimeout(() => { $('.alert.alert-danger').addClass('d-none'); }, 2000);
+     setTimeout(() => { $(`.alert.alert-${type}`).addClass('d-none'); }, 2000);
 };
 
 const createArticles = (results) => {
@@ -35,7 +35,7 @@ $('#btnGet').on('click', () => {
       createArticles(results);
     })
     .catch((err) => {
-     showMessage('error', err.responseJSON.message);
+     showMessage('danger', err.responseJSON.message);
     });
 });
 $(document).on('click', '.btnSave', (evt) => {
@@ -54,7 +54,7 @@ $(document).on('click', '.btnSave', (evt) => {
      showMessage('success', 'Article Saved');
     }).catch((msg) => {
       if (msg.status === 409) {
-          showMessage('alert', msg.responseJSON.friendlyMessage);
+          showMessage('danger', msg.responseJSON.friendlyMessage);
       }
     });
 });
@@ -121,11 +121,11 @@ $(document).on('click', '.bntSaveComment', (evt) => {
     data: theData,
   })
     .then(() => {
-          showMessage('success', 'Commet Saved');
+          showMessage('success', 'Comment Saved');
           $('#exampleModalCenter').modal('hide');
           $('#btnSaved').trigger('click');
     })
     .catch((err) => {
-     showMessage('alert', err.responseJSON.errorMessage);
+     showMessage('danger', err.responseJSON.errorMessage);
     });
 });
