@@ -8,10 +8,12 @@ const defineSection = (arg) => {
 const createArticles = (results) => {
   $('#articles').html('');
   results.articles.forEach((element) => {
+     const theUrl = element.link.substr(0, 1) === '/' ? `https://www.cnn.com${element.link}` : element.link;
+           
     const card = `<div class="card col-11 col-md-5 col-xl-3  m-2 px-0">
           <h5 class="card-header text-uppercase">Section: ${defineSection(element.section)}</h5>
           <div class="card-body">
-            <h5 class="card-title"><a href="${element.link}" target="_blank">${element.headline}</a></h5>
+            <h5 class="card-title"><a href="${theUrl}" target="_blank">${element.headline}</a></h5>
             <button class="btn btn-primary btnSave">Save</button>
             <button class="btn btn-danger btnAddNote">Add/Edit Comment</button>
           </div>
@@ -20,6 +22,7 @@ const createArticles = (results) => {
   });
 };
 $('#btnGet').on('click', () => {
+     $('#articles').html('<h2>Loading ...</h2>');
   $.ajax({
     method: 'GET',
     url: '/getArticles',
@@ -53,13 +56,14 @@ $(document).on('click', '#btnSaved', () => {
     url: '/getSavedArticle',
   })
     .then((response) => {
-      $('#articles').html('');
+      $('#articles').html('');      
       response.forEach((element) => {
-          const comments = element.note === undefined ? '' : `<div>Comment: <span class="comment">${element.note.comment}</span><br/>By: <span class="author">${element.note.author}</span>`;
-        const card = `<div class="card col-11 col-md-5 col-xl-3  m-2 px-0" data-id=${element._id}>
+           const theUrl = element.url.substr(0, 1) === '/' ? `https://www.cnn.com${element.url}` : element.url;
+           const comments = element.note === undefined ? '' : `<div>Comment: <span class="comment">${element.note.comment}</span><br/>By: <span class="author">${element.note.author}</span>`;
+           const card = `<div class="card col-11 col-md-5 col-xl-3  m-2 px-0" data-id=${element._id}>
              <h5 class="card-header text-uppercase">Section: ${defineSection(element.section)}</h5>
              <div class="card-body">
-               <h5 class="card-title"><a href="${element.url}" target="_blank">${element.title}</a></h5>
+               <h5 class="card-title"><a href="${theUrl}" target="_blank">${element.title}</a></h5>
                <button class="btn btn-primary btnSave">Save</button>
                <button class="btn btn-danger btnAddNote">Add Comment</button>
                ${comments}
